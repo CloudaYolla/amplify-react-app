@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const rootElement = document.getElementById('root')
 
-const state = {eventCount: 0, username: ''}
+const state = {eventCount: 0, username: '', predictionResp: ''}
 
 function App() {
   
@@ -16,14 +16,30 @@ function App() {
 
   function handleChange(event) {
     setState({photo: event.target.value})
+    setState({ predictionResp: "{ 'TBD' }"});
     
     const api = 'https://g1sl8z5hse.execute-api.us-east-1.amazonaws.com/Prod/invocations';
     const data = { url : 'https://mkenyaujerumani.de/wp-content/uploads/2016/09/House-under-construction.jpg' };
+    const options = {
+      headers: {'Content-Type': 'application/json'}
+      
+    };
+
+    // declare a request interceptor
+    axios.interceptors.request.use(config => {
+      // perform a task before the request is sent
+      console.log('Request was sent');
+    
+      return config;
+    }, error => {
+      // handle the error
+      return Promise.reject(error);
+    });
 
     axios
       .post(api, data)
       .then((response) => {
-        setState({predictionResp: response});
+        setState({ predictionResp: response.data });
         console.log(response);
       })
       .catch((error) => {
