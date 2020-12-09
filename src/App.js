@@ -9,9 +9,9 @@ const state = {predclass: '', predprob: ''}
 
 function App() {
   
-  // function handleClick() {
-  //   setState({eventCount: state.eventCount + 1})
-  // }
+  function handleClick() {
+    // setState({event.target.value: ''})
+  }
 
   function handleChange(event) {
     setState({photourl: event.target.value})
@@ -51,10 +51,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
 
-        <p>Provide a URL for a Building Photo </p>
+        <p> Provide a URL for a Building Photo </p>
 
         <p>
-          <input onChange={handleChange} />
+          <input onChange={handleChange}/>
         </p>
 
         <p>The building is classified as: {state.predclass} </p>
@@ -63,11 +63,11 @@ function App() {
           <img src={state.photourl} height="200" alt="" />
         </p>
         
-        <p>
+        <p style={{fontSize: '12px'}}>
             URL you entered: {state.photourl}
         </p>
         
-        <p>
+        <p style={{fontSize: '12px'}}>
         The ML model implemented with fastai & deployed to AWS Lambda as a Container. Front end is on AWS Amplify
         </p>
         <a
@@ -75,6 +75,7 @@ function App() {
           href="https://twitter.com/HBAkirmak/"
           target="_blank"
           rel="noopener noreferrer"
+          style={{fontSize: '10px'}}
         >
           Twitter: @HBAkirmak
         </a>
