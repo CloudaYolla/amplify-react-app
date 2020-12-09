@@ -3,43 +3,39 @@ import './App.css';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+// const rootElement = document.getElementById('root')
 
-const rootElement = document.getElementById('root')
-
-const state = {eventCount: 0, username: '', predictionResp: ''}
+const state = {predclass: '', predprob: ''}
 
 function App() {
   
-  function handleClick() {
-    setState({eventCount: state.eventCount + 1})
-  }
+  // function handleClick() {
+  //   setState({eventCount: state.eventCount + 1})
+  // }
 
   function handleChange(event) {
     setState({photo: event.target.value})
-    setState({ predictionResp: "{ 'TBD' }"});
-    
-    const api = 'https://g1sl8z5hse.execute-api.us-east-1.amazonaws.com/Prod/invocations';
-    const data = { url : 'https://mkenyaujerumani.de/wp-content/uploads/2016/09/House-under-construction.jpg' };
-    const options = {
-      headers: {'Content-Type': 'application/json'}
-      
-    };
 
-    // declare a request interceptor
-    axios.interceptors.request.use(config => {
-      // perform a task before the request is sent
-      console.log('Request was sent');
+    // 8Dec 22:42 API - actual one via sam build
+    // const api = 'https://4l8y23efu7.execute-api.us-east-1.amazonaws.com/Prod';
     
-      return config;
-    }, error => {
-      // handle the error
-      return Promise.reject(error);
-    });
+    //8Dec 14:32 API - custom API with latest sam build 8Dec22:42 but with CORS. tested API Test, tested Lambda Test
+    
+    const api = 'https://f6lxgmn9a3.execute-api.us-east-1.amazonaws.com/prod'
+    
+    // const data = { url : 'https://mkenyaujerumani.de/wp-content/uploads/2016/09/House-under-construction.jpg' };
+    
+    // const data = { "body": "{\"url\": \"https://mkenyaujerumani.de/wp-content/uploads/2016/09/House-under-construction.jpg\"}" }
+
+    // const hbadata = { "body": "{\"url\": \"{state.photo}\" }" }
+    // const hbadata = "{ \"url\" : " + state.photo + " }";
 
     axios
-      .post(api, data)
+      // .post(api, data)
+      .post(api, { url : 'https://mkenyaujerumani.de/wp-content/uploads/2016/09/House-under-construction.jpg' })
       .then((response) => {
-        setState({ predictionResp: response.data });
+        setState({ predclass: response.data.class});
+        setState({ predprob: response.data.probability});
         console.log(response);
       })
       .catch((error) => {
@@ -54,18 +50,25 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
 
-        <p>Provide URL for Building Photo: </p>
-        
+        <p>Provide a URL for a Building Photo </p>
+
         <p>
           <input onChange={handleChange} />
         </p>
 
-        <p>The building is classified as: [built vs. construction] </p>
-        <p>predictionResp: {state.predictionResp} </p>
+        <p>The building is classified as: {state.predclass} </p>
+        <p>Confidence % : {state.predprob} </p>
         <p>
-          <img src={state.photo} height="200"/>
+          <img src={state.photo} height="200" alt="" />
         </p>
         
+        <p>
+            URL you entered: {state.photo}
+        </p>
+        
+        <p>
+        The ML model implemented with fastai & deployed to AWS Lambda as a Container. Front end is on AWS Amplify
+        </p>
         <a
           className="App-link"
           href="https://twitter.com/HBAkirmak/"
