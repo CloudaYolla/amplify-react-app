@@ -3,36 +3,20 @@ import './App.css';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-// const rootElement = document.getElementById('root')
 
 const state = {predclass: '', predprob: ''}
 
 function App() {
   
-  function handleClick() {
-    // setState({event.target.value: ''})
-  }
-
   function handleChange(event) {
     setState({photourl: event.target.value})
 
-    // 8Dec 22:42 API - actual one via sam build
-    // const api = 'https://4l8y23efu7.execute-api.us-east-1.amazonaws.com/Prod';
-    
-    //8Dec 14:32 API - custom API with latest sam build 8Dec22:42 but with CORS. tested API Test, tested Lambda Test
-    
-    const api = 'https://f6lxgmn9a3.execute-api.us-east-1.amazonaws.com/prod'
+    // 9Dec 18:42 API - MVP
+    const api = 'https://4l8y23efu7.execute-api.us-east-1.amazonaws.com/Prod/invocations';
     
     const data = '{ "url" : "' + state.photourl + '" }';
     
-    // const data = { "body": "{\"url\": \"https://mkenyaujerumani.de/wp-content/uploads/2016/09/House-under-construction.jpg\"}" }
-
-    // const hbadata = { "body": "{\"url\": \"{state.photo}\" }" }
-    // const hbadata = "{ \"url\" : " + state.photo + " }";
-
     axios
-      // .post(api, data)
-      // .post(api, { url : 'https://mkenyaujerumani.de/wp-content/uploads/2016/09/House-under-construction.jpg' })
       .post(api, data)
       .then((response) => {
         setState({ predclass: response.data.class});
