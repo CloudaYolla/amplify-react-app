@@ -15,6 +15,8 @@ AWS API GW provides a RESTful API.
 ### ML Inference
 The Inference code is Docker containerized and deployed as a Lambda function.
 
+![Model Summary](public/mlmodelsummary.png)
+
 ## Frontend
 The front end is based on this tutorial. It's a full stact web app created in React: https://aws.amazon.com/getting-started/hands-on/build-react-app-amplify-graphql/module-one/?e=gs2020&p=build-a-react-app-intro 
 
